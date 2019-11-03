@@ -1,7 +1,8 @@
-import i18next from "i18next";
+import * as i18next from "i18next";
 import * as XHR from "i18next-xhr-backend";
 import { Ii18n } from "./i18n/Ii18n";
 import textExtensions from "./i18n/textExtensions";
+
 
 export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
     public static staticConstructor(): any {
@@ -13,11 +14,11 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
     }
 
     public get modules(): i18next.Modules {
-        return i18next.modules;
+        return i18next.default.modules;
     }
 
     public get services(): i18next.Services {
-        return i18next.services;
+        return i18next.default.services;
     }
 
     private languageChangedBound: any;
@@ -41,12 +42,12 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
      * @param callback - will be called after all translations were loaded or with an error when failed (in case of using a backend).
      */
     public initialize(options: any, callback?: i18next.Callback): void {
-        i18next.use(new XHR(null, options));
+        i18next.default.use(new XHR.default(null, options));
         if (options) {
-            i18next.init(options, callback);
+            i18next.default.init(options, callback);
             return;
         }
-        i18next.init(callback);
+        i18next.default.init(callback);
     }
 
     /**
@@ -54,7 +55,7 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
      * For available module see the plugins page and don't forget to read the documentation of the plugin.
      */
     public use(module: any): i18next.i18n {
-        return i18next.use(module);
+        return i18next.default.use(module);
     }
 
     public t<
@@ -62,23 +63,23 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
         TKeys extends string = string,
         TValues extends object = object
     >(key: TKeys | TKeys[], options?: i18next.TOptions<TValues>): TResult {
-        return i18next.t(key, options);
+        return i18next.default.t(key, options);
     }
 
     public exists(key: string | string[], options?: i18next.InterpolationOptions): boolean {
-        return i18next.exists(key, options);
+        return i18next.default.exists(key, options);
     }
 
     public loadResources(callback?: (err: any) => void): void {
-        i18next.loadResources(callback);
+        i18next.default.loadResources(callback);
     }
 
     public createInstance(options?: i18next.InitOptions, callback?: i18next.Callback): i18next.i18n {
-        return i18next.createInstance(options, callback);
+        return i18next.default.createInstance(options, callback);
     }
 
     public cloneInstance(options?: i18next.InitOptions, callback?: i18next.Callback): i18next.i18n {
-        return i18next.cloneInstance(options, callback);
+        return i18next.default.cloneInstance(options, callback);
     }
 
     /**
@@ -87,7 +88,7 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
      * On the returned function you can like in the t function override the languages or namespaces by passing them in options or by prepending namespace.
      */
     public getFixedT(lng: string | string[], ns?: string | string[]): i18next.TFunction {
-        return i18next.getFixedT(lng, ns);
+        return i18next.default.getFixedT(lng, ns);
     }
 
     /**
@@ -95,7 +96,7 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
      * HINT: For easy testing - setting lng to 'cimode' will set t function to always return the key.
      */
     public changeLanguage(lng: string, callback?: i18next.Callback): Promise<i18next.TFunction> {
-        return i18next.changeLanguage(lng, callback);
+        return i18next.default.changeLanguage(lng, callback);
     }
 
     /**
@@ -103,70 +104,70 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
      * If you need the primary used language depending on your configuration (whilelist, load) you will prefer using i18next.languages[0].
      */
     public get language(): string {
-        return i18next.language;
+        return i18next.default.language;
     }
 
     /**
      * Is set to an array of language-codes that will be used it order to lookup the translation value.
      */
     public get languages(): string[] {
-        return i18next.languages;
+        return i18next.default.languages;
     }
 
     /**
      * Loads additional namespaces not defined in init options.
      */
     public loadNamespaces(ns: string | string[], callback: i18next.Callback): Promise<void> {
-        return i18next.loadNamespaces(ns, callback);
+        return i18next.default.loadNamespaces(ns, callback);
     }
 
     /**
      * Loads additional languages not defined in init options (preload).
      */
     public loadLanguages(lngs: string | string[], callback: i18next.Callback): Promise<void> {
-        return i18next.loadLanguages(lngs, callback);
+        return i18next.default.loadLanguages(lngs, callback);
     }
 
     /**
      * Reloads resources on given state. Optionally you can pass an array of languages and namespaces as params if you don't want to reload all.
      */
     public reloadResources(lngs?: string[], ns?: string[]): Promise<void> {
-        return i18next.reloadResources(lngs, ns);
+        return i18next.default.reloadResources(lngs, ns);
     }
 
     /**
      * Changes the default namespace.
      */
     public setDefaultNamespace(ns: string): void {
-        i18next.setDefaultNamespace(ns);
+        i18next.default.setDefaultNamespace(ns);
     }
 
     /**
      * Returns rtl or ltr depending on languages read direction.
      */
     public dir(lng?: string): "ltr" | "rtl" {
-        return i18next.dir(lng);
+        return i18next.default.dir(lng);
     }
 
     /**
      * Exposes interpolation.format function added on init.
      */
     public get format(): i18next.FormatFunction {
-        return i18next.format;
+        return i18next.default.format;
     }
 
     /**
      * Event listener
      */
     public on(event: string, listener: (...args: any[]) => void): void {
-        i18next.on(event, listener);
+        i18next.default.on(event, listener);
     }
 
     /**
      * Remove event listener
      */
     public off(event: string, listener: (...args: any[]) => void): void {
-        i18next.off(event, listener);
+        i18next.default.off(event, listener);
     }
 
     /**
@@ -180,7 +181,7 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
             keySeparator?: string;
         }
     ): any {
-        i18next.getResource(lng, ns, key, options);
+        i18next.default.getResource(lng, ns, key, options);
     }
 
     /**
@@ -196,14 +197,14 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
             silent?: boolean;
         }
     ): void {
-        i18next.addResource(lng, ns, key, value, options);
+        i18next.default.addResource(lng, ns, key, value, options);
     }
 
     /**
      * Adds multiple key/values.
      */
     public addResources(lng: string, ns: string, resources: any): void {
-        i18next.addResources(lng, ns, resources);
+        i18next.default.addResources(lng, ns, resources);
     }
 
     /**
@@ -212,42 +213,42 @@ export class I18nPlugin extends Phaser.Plugins.ScenePlugin implements Ii18n {
      * Setting overwrite to true it will overwrite existing translations in that file.
      */
     public addResourceBundle(lng: string, ns: string, resources: any, deep?: boolean, overwrite?: boolean): void {
-        i18next.addResourceBundle(lng, ns, resources, deep, overwrite);
+        i18next.default.addResourceBundle(lng, ns, resources, deep, overwrite);
     }
 
     /**
      * Checks if a resource bundle exists.
      */
     public hasResourceBundle(lng: string, ns: string): boolean {
-        return i18next.hasResourceBundle(lng, ns);
+        return i18next.default.hasResourceBundle(lng, ns);
     }
 
     /**
      * Returns a resource bundle.
      */
     public getResourceBundle(lng: string, ns: string): any {
-        return i18next.getResourceBundle(lng, ns);
+        return i18next.default.getResourceBundle(lng, ns);
     }
 
     /**
      * Removes an existing bundle.
      */
     public removeResourceBundle(lng: string, ns: string): void {
-        i18next.removeResourceBundle(lng, ns);
+        i18next.default.removeResourceBundle(lng, ns);
     }
 
     /**
      * Current options
      */
     public get options(): i18next.InitOptions {
-        return i18next.options;
+        return i18next.default.options;
     }
 
     /**
      * Is initialized
      */
     public get isInitialized(): boolean {
-        return i18next.isInitialized;
+        return i18next.default.isInitialized;
     }
 
     public recursiveUpdateText(obj: any): void {

@@ -1,10 +1,10 @@
-import i18next from "i18next";
+import * as i18next from "i18next";
 
-const setText: (value: string) => any = function(value: string): any {
+const setText: (value: string) => any = function (value: string): any {
     if (value !== this._i18nKey) {
         this._i18nKey = value.toString() || "";
     }
-    return this._setText(i18next.t(this._i18nKey, this._interpolations) || "");
+    return this._setText(i18next.default.t(this._i18nKey, this._interpolations) || "");
 };
 
 const interpolations: any = {
@@ -18,7 +18,7 @@ const interpolations: any = {
     }
 };
 
-const setTranslationParameter: (key: string, value: any) => void = function(key: string, value: any): void {
+const setTranslationParameter: (key: string, value: any) => void = function (key: string, value: any): void {
     if (!this._interpolations) {
         this._interpolations = {};
     }
@@ -26,7 +26,7 @@ const setTranslationParameter: (key: string, value: any) => void = function(key:
     this.setText(this._i18nKey);
 };
 
-const clearTranslationParameter: (key: string) => void = function(key: string): void {
+const clearTranslationParameter: (key: string) => void = function (key: string): void {
     if (key in this._interpolations) {
         delete this._interpolations[key];
     }
@@ -52,7 +52,7 @@ const commonExtend: (clazz: any, prop: string) => void = (clazz: any, prop: stri
         if (textCreator) {
             delete creator.prototype[prop];
             creator.register(`_${prop}`, textCreator);
-            creator.register(prop, function(config: any, addToScene: boolean = false): Phaser.GameObjects.GameObject {
+            creator.register(prop, function (config: any, addToScene: boolean = false): Phaser.GameObjects.GameObject {
                 const _text: Phaser.GameObjects.GameObject = this.scene.make[`_${prop}`](config, addToScene);
                 (_text as any).interpolations = config.interpolations;
                 return _text;
@@ -80,7 +80,7 @@ const textExtensions: any = {
         if (!gameObjectFactory) {
             return;
         }
-        gameObjectFactory.register("text", function(
+        gameObjectFactory.register("text", function (
             x: any,
             y: any,
             str: any,
@@ -102,7 +102,7 @@ const textExtensions: any = {
         if (!gameObjectFactory) {
             return;
         }
-        gameObjectFactory.register("bitmapText", function(
+        gameObjectFactory.register("bitmapText", function (
             x: any,
             y: any,
             font: any,
@@ -125,7 +125,7 @@ const textExtensions: any = {
         if (!gameObjectFactory) {
             return;
         }
-        gameObjectFactory.register("dynamicBitmapText", function(
+        gameObjectFactory.register("dynamicBitmapText", function (
             x: any,
             y: any,
             font: any,
